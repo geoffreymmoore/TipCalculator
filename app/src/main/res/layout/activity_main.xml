@@ -30,27 +30,17 @@
         android:layout_alignParentEnd="true"
         android:id="@+id/billAmountET"
         android:textAlignment="textEnd"
-        android:textSize="20sp" />
-
-    <TextView
-        android:text="$0.00"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tipAmountTV"
         android:textSize="20sp"
-        android:textAlignment="textEnd"
-        android:layout_alignBaseline="@+id/tipAmountLbl"
-        android:layout_alignBottom="@+id/tipAmountLbl"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignStart="@+id/percentTV" />
 
     <TextView
         android:text="$0.00"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/totalLbl"
-        android:layout_alignStart="@+id/tipAmountTV"
         android:id="@+id/totalTV"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:text="-"
@@ -96,23 +86,6 @@
         android:layout_alignBottom="@+id/percentTV"
         android:layout_alignParentStart="true" />
 
-    <Button
-        android:text="Apply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/applyButton"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="Reset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
-        android:id="@+id/resetButton"
-        android:layout_below="@+id/applyButton"
-        android:layout_alignStart="@+id/applyButton" />
-
     <TextView
         android:text="Total"
         android:layout_width="wrap_content"
@@ -120,9 +93,9 @@
         android:id="@+id/totalLbl"
         android:textStyle="normal|bold"
         android:textSize="20sp"
-        android:layout_above="@+id/applyButton"
+        android:layout_below="@+id/plusButton"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="21dp" />
+        android:layout_marginTop="83dp" />
 
     <TextView
         android:text="Tip Amount"
@@ -131,8 +104,28 @@
         android:id="@+id/tipAmountLbl"
         android:textStyle="normal|bold"
         android:textSize="20sp"
-        android:layout_below="@id/percentLbl"
-        android:layout_above="@+id/totalLbl"
-        android:layout_marginTop="30dp" />
+        android:layout_below="@+id/plusButton"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="14dp" />
+
+    <TextView
+        android:text="$0.00"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tipAmountTV"
+        android:textSize="20sp"
+        android:textAlignment="textEnd"
+        android:layout_alignBaseline="@+id/tipAmountLbl"
+        android:layout_alignBottom="@+id/tipAmountLbl"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/resetButton"
+        android:layout_below="@+id/totalLbl"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="62dp" />
 
 </RelativeLayout>
