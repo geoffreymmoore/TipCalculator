@@ -3,18 +3,23 @@ package com.moore.tipcalculator;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.security.PrivateKey;
 import java.text.NumberFormat;
 
 public class MainActivity extends AppCompatActivity
 implements TextView.OnEditorActionListener, View.OnClickListener{
+
+    //variable for logging purposes
+    private static final String TAG = "MainActivity";
 
     //define variables for the widgets
     private EditText billAmountET;
@@ -68,6 +73,8 @@ implements TextView.OnEditorActionListener, View.OnClickListener{
             billAmount = Float.parseFloat(billAmountString);
         }
 
+        Log.d(TAG, "Bill Amount: " + billAmount);
+
 
         float tipAmount = billAmount * tipPercent;
         float total = billAmount + tipAmount;
@@ -109,6 +116,8 @@ implements TextView.OnEditorActionListener, View.OnClickListener{
             calculateAndDisplay();
 
         }
+
+        Toast.makeText(getApplicationContext(),"ActionID: " + actionId,Toast.LENGTH_LONG).show();
         return false;
     }
 
