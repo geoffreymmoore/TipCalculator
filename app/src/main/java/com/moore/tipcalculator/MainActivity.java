@@ -6,17 +6,21 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import java.security.PrivateKey;
 import java.text.NumberFormat;
 
 public class MainActivity extends AppCompatActivity
-implements TextView.OnEditorActionListener, View.OnClickListener{
+implements OnEditorActionListener{
 
     //variable for logging purposes
     private static final String TAG = "MainActivity";
@@ -52,10 +56,38 @@ implements TextView.OnEditorActionListener, View.OnClickListener{
         resetButton = (Button) findViewById(R.id.resetButton);
 
         //set the listeners
+        //Current Class as Listener
         billAmountET.setOnEditorActionListener(this);
-        percentPlusButton.setOnClickListener(this);
-        percentMinusButton.setOnClickListener(this);
-        resetButton.setOnClickListener(this);
+
+        //Named Class as Listener
+        KeyListener keyListener = new KeyListener();
+        billAmountET.setOnKeyListener(keyListener);
+
+        //Anonymous Inner Class
+        percentPlusButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.plusButton:
+                        tipPercent = tipPercent + 0.01f;
+                        calculateAndDisplay();
+                        break;
+                    case R.id.minusButton:
+                        tipPercent = tipPercent - 0.01f;
+                        calculateAndDisplay();
+                        break;
+                    case R.id.resetButton:
+                        billAmountET.setText("");
+                        tipPercent = .15f;
+                        calculateAndDisplay();
+                        break;
+                }
+            }
+        });
+
+        //Anonymous Class
+        percentMinusButton.setOnClickListener(clickListener);
+        resetButton.setOnClickListener(clickListener);
 
         // get SharedPerferences object
         savedValues = getSharedPreferences("SavedValues",MODE_PRIVATE);
@@ -89,25 +121,7 @@ implements TextView.OnEditorActionListener, View.OnClickListener{
         totalTV.setText(currency.format(total));
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.plusButton:
-                tipPercent = tipPercent + 0.01f;
-                calculateAndDisplay();
-                break;
-            case R.id.minusButton:
-                tipPercent = tipPercent - 0.01f;
-                calculateAndDisplay();
-                break;
-            case R.id.resetButton:
-                billAmountET.setText("");
-                tipPercent = .15f;
-                calculateAndDisplay();
-                break;
-        }
 
-    }
 
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -147,5 +161,52 @@ implements TextView.OnEditorActionListener, View.OnClickListener{
         calculateAndDisplay();
     }
 
+    private OnClickListener clickListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.plusButton:
+                    tipPercent = tipPercent + 0.01f;
+                    calculateAndDisplay();
+                    break;
+                case R.id.minusButton:
+                    tipPercent = tipPercent - 0.01f;
+                    calculateAndDisplay();
+                    break;
+                case R.id.resetButton:
+                    billAmountET.setText("");
+                    tipPercent = .15f;
+                    calculateAndDisplay();
+                    break;
+            }
+        }
+    };
 
+    class KeyListener implements OnKeyListener {
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_ENTER:
+                case KeyEvent.KEYCODE_DPAD_CENTER:
+                    calculateAndDisplay();
+                    imm.hideSoftInputFromInputMethod(billAmountET.getWindowToken(), 0);
+                    return true; //consume the event
+                case KeyEvent.KEYCODE_DPAD_DOWN:
+                    calculateAndDisplay();
+                    imm.hideSoftInputFromInputMethod(billAmountET.getWindowToken(), 0);
+                    break; // don't consume the event
+                case KeyEvent.KEYCODE_DPAD_RIGHT:
+                case KeyEvent.KEYCODE_DPAD_LEFT:
+                    if (v.getId() == R.id.plusButton) {
+                        calculateAndDisplay();
+                    }
+                    break; // don't consume the event
+            }
+
+            return false;
+        }
+    }
 }
