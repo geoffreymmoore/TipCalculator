@@ -2,7 +2,6 @@ package com.moore.tipcalculator;
 
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,7 +30,6 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import java.security.PrivateKey;
 import java.text.NumberFormat;
 
 public class MainActivity extends AppCompatActivity
@@ -85,8 +83,6 @@ public class MainActivity extends AppCompatActivity
         percentTV = (TextView) findViewById(R.id.percentTV);
         tipAmountTV = (TextView) findViewById(R.id.tipAmountTV);
         totalTV = (TextView) findViewById(R.id.totalTV);
-        //percentPlusButton = (Button) findViewById(R.id.plusButton);
-        //percentMinusButton = (Button) findViewById(R.id.minusButton);
         resetButton = (Button) findViewById(R.id.resetButton);
         percentSeekBar = (SeekBar) findViewById(R.id.percentSeekBar);
         roundingRadioGroup = (RadioGroup) findViewById(R.id.roundingRadioGroup);
@@ -266,14 +262,12 @@ public class MainActivity extends AppCompatActivity
     private OnClickListener clickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.resetButton:
-                    billAmountET.setText("");
-                    tipPercent = .15f;
-                    percentSeekBar.setProgress(15);
-                    calculateAndDisplay();
-                    break;
-            }
+            billAmountET.setText("");
+            tipPercent = .15f;
+            percentSeekBar.setProgress(15);
+            roundNoneRadioButton.setChecked(true);
+            splitSpinner.setSelection(0);
+            calculateAndDisplay();
         }
     };
 
@@ -362,6 +356,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             percentTV.setText(progress + "%");
+            calculateAndDisplay();
         }
 
         @Override
@@ -371,7 +366,6 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-
         }
     };
 
