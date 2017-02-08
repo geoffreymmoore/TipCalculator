@@ -7,17 +7,27 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/textColorWhite</item>
+        <item name="android:textColorSecondary">@color/textColorWhite</item>
+        <item name="android:textColor">@color/textColorWhite</item>
 
         <item name="android:textSize">20sp</item>
         <item name="android:padding">5dp</item>
+        <item name="android:background">@color/mainBackground</item>
+
     </style>
 
     <style name="MyAppTheme.Label">
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/textColorBlack</item>
     </style>
 
     <style name="MyAppTheme.Title">
         <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="MyAppTheme.Button">
+        <item name="android:textColor">@color/textColorBlack</item>
     </style>
 
     <style name="EditTextStyle">
